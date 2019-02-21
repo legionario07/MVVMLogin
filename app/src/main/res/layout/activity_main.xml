@@ -24,8 +24,10 @@
             android:layout_height="wrap_content"
             android:afterTextChanged="@{(editable)->viewModel.afterUsuarioTextChanged(editable)}"
             android:hint="Email"
+            android:text="@={viewModel.user.usuario}"
             android:inputType="textEmailAddress"
             android:padding="8dp" />
+
 
         <EditText
             android:id="@+id/inPassword"
@@ -33,8 +35,11 @@
             android:layout_height="wrap_content"
             android:afterTextChanged="@{(editable)->viewModel.afterSenhaTextChanged(editable)}"
             android:hint="Password"
+            android:text="@={viewModel.user.senha}"
             android:inputType="textPassword"
             android:padding="8dp" />
+
+
 
 
         <Button
