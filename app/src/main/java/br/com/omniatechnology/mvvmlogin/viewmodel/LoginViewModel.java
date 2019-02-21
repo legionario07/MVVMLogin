@@ -2,16 +2,21 @@ package br.com.omniatechnology.mvvmlogin.viewmodel;
 
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
+import android.databinding.Observable;
+import android.databinding.ObservableInt;
+import android.view.View;
 
 import com.android.databinding.library.baseAdapters.BR;
 
 import br.com.omniatechnology.mvvmlogin.data.ApiServiceImpl;
 import br.com.omniatechnology.mvvmlogin.model.User;
 import rx.Observer;
+import rx.functions.Action0;
 
 public class LoginViewModel extends BaseObservable {
 
     private User user;
+    public ObservableInt progressBar;
 
     private String successMessage = "Login was successful";
     private String errorMessage = "Email or Password not valid";
@@ -33,6 +38,7 @@ public class LoginViewModel extends BaseObservable {
 
     public LoginViewModel() {
         user = new User("", "");
+        this.progressBar = new ObservableInt(View.GONE);
     }
 
     public void afterUsuarioTextChanged(CharSequence s) {
@@ -54,8 +60,18 @@ public class LoginViewModel extends BaseObservable {
 
     private void login(){
         new ApiServiceImpl().login(user)
-                //.doOnSubscribe(ViewHelper.showProgressDialogAction(context))
-                //.doAfterTerminate(ViewHelper.closeProgressDialogAction(context))
+                .doOnSubscribe(new Action0() {
+                    @Override
+                    public void call() {
+                        progressBar.set(View.VISIBLE);
+                    }
+                })
+                .doAfterTerminate(new Action0() {
+                    @Override
+                    public void call() {
+                        progressBar.set(View.GONE);
+                    }
+                })
                 .subscribe(new Observer<User>() {
                     @Override
                     public void onCompleted() {
