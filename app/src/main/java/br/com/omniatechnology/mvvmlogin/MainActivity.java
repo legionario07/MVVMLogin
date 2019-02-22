@@ -8,9 +8,10 @@ import android.view.View;
 import android.widget.Toast;
 
 import br.com.omniatechnology.mvvmlogin.databinding.ActivityMainBinding;
+import br.com.omniatechnology.mvvmlogin.presentation.IView;
 import br.com.omniatechnology.mvvmlogin.viewmodel.LoginViewModel;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements IView {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         ActivityMainBinding activityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
-        activityMainBinding.setViewModel(new LoginViewModel());
+        activityMainBinding.setViewModel(new LoginViewModel(this));
         activityMainBinding.executePendingBindings();
 
     }
@@ -28,5 +29,15 @@ public class MainActivity extends AppCompatActivity {
         if (message != null)
             Toast.makeText(view.getContext(), message, Toast.LENGTH_SHORT).show();
 
+    }
+
+    @Override
+    public void onSuccess(String msg) {
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onError(String msg) {
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }
 }

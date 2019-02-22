@@ -10,6 +10,7 @@ import com.android.databinding.library.baseAdapters.BR;
 
 import br.com.omniatechnology.mvvmlogin.data.ApiServiceImpl;
 import br.com.omniatechnology.mvvmlogin.model.User;
+import br.com.omniatechnology.mvvmlogin.presentation.IView;
 import rx.Observer;
 import rx.functions.Action0;
 
@@ -17,6 +18,7 @@ public class LoginViewModel extends BaseObservable {
 
     private User user;
     public ObservableInt progressBar;
+    private IView view;
 
     private String successMessage = "Login was successful";
     private String errorMessage = "Email or Password not valid";
@@ -36,6 +38,11 @@ public class LoginViewModel extends BaseObservable {
         notifyPropertyChanged(BR.toastMessage);
     }
 
+    public LoginViewModel(IView view){
+        this();
+        this.view = view;
+    }
+
     public LoginViewModel() {
         user = new User("", "");
         this.progressBar = new ObservableInt(View.GONE);
@@ -50,9 +57,10 @@ public class LoginViewModel extends BaseObservable {
     }
 
     public void onLoginClicked() {
-        if (!user.isInputDataValid())
-            setToastMessage(errorMessage);
-        else{
+        if (!user.isInputDataValid()) {
+            //setToastMessage(errorMessage);
+            view.onError(errorMessage);
+        }else{
             login();
         }
 
@@ -75,12 +83,14 @@ public class LoginViewModel extends BaseObservable {
                 .subscribe(new Observer<User>() {
                     @Override
                     public void onCompleted() {
-                        setToastMessage(successMessage+": "+user.getUsuario());
+                       // setToastMessage(successMessage+": "+user.getUsuario());
+                        view.onSuccess(successMessage+": "+user.getUsuario());
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        setToastMessage("Erro ao chamar Retrofit :"+e.getMessage());
+                        //setToastMessage("Erro ao chamar Retrofit :"+e.getMessage());
+                        view.onError("Erro ao chamar Retrofit :"+e.getMessage());
                         user = new User();
                     }
 
