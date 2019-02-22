@@ -14,6 +14,7 @@ import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 import org.robolectric.shadow.api.Shadow;
+import org.robolectric.shadows.ShadowProgressBar;
 import org.robolectric.shadows.ShadowToast;
 import org.robolectric.shadows.ShadowView;
 
@@ -79,6 +80,8 @@ public class MainActivityTest {
 
         assertNotNull(btnLogin);
         btnLogin.performClick();
+
+        ShadowProgressBar.visualize(progressBar);
 
         assertEquals(View.VISIBLE, progressBar.getVisibility());
 

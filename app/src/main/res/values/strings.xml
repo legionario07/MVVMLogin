@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">MvvMLogin</string>
+    <string name="app_name2"><u>MvvMLogin</u></string>
+    <string name="app_name3"><a href="http://www.google.com"><u>Google</u></a></string>
 </resources>
