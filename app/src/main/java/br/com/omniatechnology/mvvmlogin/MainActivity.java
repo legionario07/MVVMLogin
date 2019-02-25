@@ -1,7 +1,10 @@
 package br.com.omniatechnology.mvvmlogin;
 
 import android.databinding.BindingAdapter;
+import android.databinding.BindingMethod;
+import android.databinding.BindingMethods;
 import android.databinding.DataBindingUtil;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -27,9 +30,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @BindingAdapter({"toastMessage"})
-    public static void runMe(View view, String message) {
-        if (message != null)
-            Toast.makeText(view.getContext(), message, Toast.LENGTH_SHORT).show();
+    public static void showToast(View view, String message) {
+        if (message != null) {
+           Toast.makeText(view.getContext(), message, Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
+    @BindingAdapter({"snackbarMessage"})
+    public static void showSnackBar(View view, String message) {
+        if (message != null) {
+            Snackbar.make(view, message, Snackbar.LENGTH_LONG).show();
+        }
 
     }
 

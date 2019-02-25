@@ -27,6 +27,19 @@ public class LoginViewModel extends BaseObservable {
     @Bindable
     public String toastMessage = null;
 
+    public void setSnackbarMessage(String snackbarMessage) {
+        this.snackbarMessage = snackbarMessage;
+        notifyPropertyChanged(BR.snackbarMessage);
+    }
+
+    @Bindable
+    public String snackbarMessage = null;
+
+
+    public String getSnackbarMessage() {
+        return snackbarMessage;
+    }
+
 
     public String getToastMessage() {
         return toastMessage;
@@ -68,6 +81,7 @@ public class LoginViewModel extends BaseObservable {
         if (!user.isInputDataValid()) {
             clear();
             setToastMessage(errorMessage);
+            setSnackbarMessage(errorMessage);
         }else{
             login();
         }
