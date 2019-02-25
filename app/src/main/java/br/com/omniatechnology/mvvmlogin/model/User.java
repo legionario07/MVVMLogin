@@ -50,9 +50,6 @@ public class User implements Parcelable {
         return !TextUtils.isEmpty(getUsuario()) && (getSenha() !=null && getSenha().length() > 2);
     }
 
-
-
-
     protected User(Parcel in) {
         this.mUsuario = in.readString();
         this.mSenha = in.readString();
