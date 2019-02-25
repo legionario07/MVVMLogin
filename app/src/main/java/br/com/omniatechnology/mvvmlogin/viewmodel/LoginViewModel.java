@@ -2,7 +2,7 @@ package br.com.omniatechnology.mvvmlogin.viewmodel;
 
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
-import android.databinding.Observable;
+import android.databinding.ObservableField;
 import android.databinding.ObservableInt;
 import android.view.View;
 
@@ -10,7 +10,6 @@ import com.android.databinding.library.baseAdapters.BR;
 
 import br.com.omniatechnology.mvvmlogin.data.ApiServiceImpl;
 import br.com.omniatechnology.mvvmlogin.model.User;
-import br.com.omniatechnology.mvvmlogin.presentation.IView;
 import rx.Observer;
 import rx.functions.Action0;
 
@@ -18,7 +17,9 @@ public class LoginViewModel extends BaseObservable {
 
     private User user;
     public ObservableInt progressBar;
-    private IView view;
+    public ObservableField<String> usuario;
+    public ObservableField<String> password;
+
 
     private String successMessage = "Login was successful";
     private String errorMessage = "Email or Password not valid";
@@ -38,28 +39,35 @@ public class LoginViewModel extends BaseObservable {
         notifyPropertyChanged(BR.toastMessage);
     }
 
-    public LoginViewModel(IView view){
-        this();
-        this.view = view;
-    }
 
     public LoginViewModel() {
         user = new User("", "");
         this.progressBar = new ObservableInt(View.GONE);
+        this.usuario = new ObservableField<>();
+        this.password = new ObservableField<>();
+
     }
 
     public void afterUsuarioTextChanged(CharSequence s) {
-        user.setUsuario(s.toString());
+        usuario.set(s.toString());
     }
 
     public void afterSenhaTextChanged(CharSequence s) {
-        user.setSenha(s.toString());
+        password.set(s.toString());
+    }
+
+    private void clear(){
+
+        usuario.set("");
+        password.set("");
+
     }
 
     public void onLoginClicked() {
+        user = new User(usuario.get(), password.get());
         if (!user.isInputDataValid()) {
-            //setToastMessage(errorMessage);
-            view.onError(errorMessage);
+            clear();
+            setToastMessage(errorMessage);
         }else{
             login();
         }
@@ -83,15 +91,16 @@ public class LoginViewModel extends BaseObservable {
                 .subscribe(new Observer<User>() {
                     @Override
                     public void onCompleted() {
-                       // setToastMessage(successMessage+": "+user.getUsuario());
-                        view.onSuccess(successMessage+": "+user.getUsuario());
+                       setToastMessage(successMessage+": "+user.getUsuario());
+
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        //setToastMessage("Erro ao chamar Retrofit :"+e.getMessage());
-                        view.onError("Erro ao chamar Retrofit :"+e.getMessage());
-                        user = new User();
+                        setToastMessage("Erro ao chamar Retrofit :"+e.getMessage());
+
+                        clear();
+
                     }
 
                     @Override

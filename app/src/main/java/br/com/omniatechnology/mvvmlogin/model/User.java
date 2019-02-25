@@ -1,5 +1,6 @@
 package br.com.omniatechnology.mvvmlogin.model;
 
+import android.databinding.ObservableField;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
@@ -25,6 +26,8 @@ public class User implements Parcelable {
     public User() {
     }
 
+
+
     @NonNull
     public String getUsuario() {
         return mUsuario;
@@ -44,7 +47,7 @@ public class User implements Parcelable {
     }
 
     public boolean isInputDataValid() {
-        return !TextUtils.isEmpty(getUsuario()) && getSenha().length() > 2;
+        return !TextUtils.isEmpty(getUsuario()) && (getSenha() !=null && getSenha().length() > 2);
     }
 
 

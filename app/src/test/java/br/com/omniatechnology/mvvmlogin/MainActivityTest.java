@@ -12,16 +12,12 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
-import org.robolectric.annotation.Config;
-import org.robolectric.shadow.api.Shadow;
 import org.robolectric.shadows.ShadowProgressBar;
 import org.robolectric.shadows.ShadowToast;
-import org.robolectric.shadows.ShadowView;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
-import static org.hamcrest.CoreMatchers.equalTo;
 
 @RunWith(RobolectricTestRunner.class)
 //@Config(constants = BuildConfig.DEBUG)

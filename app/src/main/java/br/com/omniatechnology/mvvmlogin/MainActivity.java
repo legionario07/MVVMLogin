@@ -5,14 +5,12 @@ import android.databinding.DataBindingUtil;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import br.com.omniatechnology.mvvmlogin.databinding.ActivityMainBinding;
-import br.com.omniatechnology.mvvmlogin.presentation.IView;
 import br.com.omniatechnology.mvvmlogin.viewmodel.LoginViewModel;
 
-public class MainActivity extends AppCompatActivity implements IView {
+public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding activityMainBinding;
 
@@ -22,7 +20,7 @@ public class MainActivity extends AppCompatActivity implements IView {
         //setContentView(R.layout.activity_main);
 
         activityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
-        activityMainBinding.setViewModel(new LoginViewModel(this));
+        activityMainBinding.setViewModel(new LoginViewModel());
         activityMainBinding.executePendingBindings();
 
 
@@ -36,16 +34,5 @@ public class MainActivity extends AppCompatActivity implements IView {
 
     }
 
-    @Override
-    public void onSuccess(String msg) {
-        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
 
-    }
-
-    @Override
-    public void onError(String msg) {
-        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
-        activityMainBinding.inEmail.getText().clear();
-        activityMainBinding.inPassword.getText().clear();
-    }
 }
