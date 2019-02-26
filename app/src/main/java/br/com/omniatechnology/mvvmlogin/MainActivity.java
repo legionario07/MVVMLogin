@@ -29,6 +29,13 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    @BindingAdapter({"isStartActivity"})
+    public static void startActivity(View view, boolean isStart){
+
+        Toast.makeText(view.getContext(), "Start",Toast.LENGTH_LONG).show();
+
+    }
+
     @BindingAdapter({"toastMessage"})
     public static void showToast(View view, String message) {
         if (message != null) {

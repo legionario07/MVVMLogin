@@ -66,6 +66,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/inPassword"
             bind:toastMessage="@{viewModel.toastMessage}"
+            bind:isStartActivity="@{viewModel.isStartActivity}"
+
            />
 
         <ProgressBar

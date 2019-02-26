@@ -33,7 +33,15 @@ public class LoginViewModel extends BaseObservable {
     }
 
     @Bindable
+    public boolean isStartActivity;
+
+    @Bindable
     public String snackbarMessage = null;
+
+    public void isStartActivity(boolean isStartActivity){
+        this.isStartActivity = isStartActivity;
+        notifyPropertyChanged(BR.isStartActivity);
+    }
 
 
     public String getSnackbarMessage() {
@@ -80,7 +88,7 @@ public class LoginViewModel extends BaseObservable {
         user = new User(usuario.get(), password.get());
         if (!user.isInputDataValid()) {
             clear();
-            setToastMessage(errorMessage);
+            isStartActivity(false);
             setSnackbarMessage(errorMessage);
         }else{
             login();
